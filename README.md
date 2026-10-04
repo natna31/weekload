@@ -5,7 +5,7 @@
 WeekLoad is a free, mobile-friendly web app that adds up the "stress" of every school day, so students and teachers can spot a crushing day *before* it happens.
 
 **Live app:** https://natna31.github.io/weekload/
-**Demo video:** [add your YouTube link here]
+**Demo video:** https://youtu.be/okILf4LRXfA
 **Made for:** CSC Back-to-School Hackathon 2026
 
 ---
