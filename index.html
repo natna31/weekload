@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WeekLoad</title><style>
+:root{--base:#E4E9F2;--light:#fff;--dark:#AEB9D0;--ink:#14213D;--ink2:#4A5774;--accent:#2548D6;--onacc:#fff;--l1:#BFE8D2;--l2:#F3D98B;--l3:#E8567C;--r:-6px -6px 14px var(--light),6px 6px 14px var(--dark);--rs:-3px -3px 7px var(--light),3px 3px 7px var(--dark);--in:inset -4px -4px 8px var(--light),inset 4px 4px 8px var(--dark)}
+[data-theme=dark]{--base:#1B2336;--light:#26304A;--dark:#0F1524;--ink:#E8EDF8;--ink2:#A3AFCB;--accent:#7F9BFF;--onacc:#0F1524;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{font-size:clamp(14px,.35vw + 12.6px,16px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--base);color:var(--ink);font:1rem/1.45 "Plus Jakarta Sans",Manrope,system-ui,sans-serif}
+h1{font-size:1.5rem;line-height:1.2;margin:0}h2{font-size:1.05rem;margin:0 0 10px}p{margin:0 0 10px}
+main{max-width:640px;margin:auto;padding:16px 12px 150px}
+.mute{color:var(--ink2);font-size:.9rem}a{color:var(--accent);display:inline-flex;align-items:center;min-height:44px}
+.hd{display:flex;align-items:center;gap:14px;margin-bottom:18px}.hd p{margin:0}
+.logo{width:44px;height:44px;border-radius:50%;box-shadow:var(--r);display:grid;place-items:center;color:var(--accent);flex:none}
+.card{background:var(--base);box-shadow:var(--r);border-radius:20px;padding:14px;margin-bottom:16px}
+.cols{display:grid;gap:0}.stats{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-bottom:20px}
+.b,.chip,.day,nav a,.fab{font:inherit;color:var(--ink);background:var(--base);border:0;cursor:pointer}
+.b{min-height:44px;padding:0 16px;border-radius:16px;box-shadow:var(--rs);font-weight:600}
+.b.acc{background:var(--accent);color:var(--onacc)}.b.red{background:var(--l3);color:#fff}
+.b:active,.b[aria-pressed=true],.b[aria-checked=true],.chip[aria-pressed=true]{box-shadow:var(--in)}
+.b.acc:active{filter:brightness(.9)}.b:disabled{opacity:.5;box-shadow:none;cursor:default}
+.chip{min-height:44px;padding:0 14px;border-radius:999px;box-shadow:var(--rs)}.chip[aria-pressed=true]{color:var(--accent);font-weight:700}
+.tag{display:inline-block;padding:1px 10px;border-radius:999px;font-size:13px;box-shadow:var(--in);color:var(--ink2)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+input,select,textarea{width:100%;min-height:44px;padding:8px 14px;border:0;border-radius:14px;background:var(--base);color:var(--ink);box-shadow:var(--in);font:inherit}
+label{display:block;margin-top:12px;font-size:.9rem;color:var(--ink2)}label>*{margin-top:4px}
+.g7{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.dow{text-align:center;color:var(--ink2);font-size:13px;margin-bottom:6px}
+.day{height:clamp(44px,11vw,58px);border-radius:14px;box-shadow:var(--rs);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;padding:2px}
+.day small{font-size:13px;min-height:15px}.day b{display:flex;align-items:center;gap:2px}.u{display:none}
+.h0{box-shadow:var(--in)}.fill{height:100%;border-radius:9px;background:var(--accent)}
+.h1{background:var(--l1);color:#14213D}.h2{background:var(--l2);color:#14213D}.h3{background:var(--l3);color:#fff}
+.past{opacity:.5}.day.td{box-shadow:var(--rs),0 0 0 3px var(--accent)}.day.h0.td{box-shadow:var(--in),0 0 0 3px var(--accent)}.day.sel{box-shadow:var(--in),0 0 0 3px var(--accent)}
+.sw{display:inline-block;width:14px;height:14px;border-radius:5px;margin-right:6px;vertical-align:-2px;background:var(--base)}
+.leg{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:13px}
+.msg{padding:12px 14px;border-radius:14px;margin:0 0 8px}.msg svg{vertical-align:-2px;margin-right:6px}
+.row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}.row2{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0}
+.item{box-shadow:var(--in);border-radius:16px;padding:12px 14px;margin-top:10px}.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.opt{display:block;width:100%;text-align:left;margin-top:10px;padding:10px 14px}.stp{display:flex;align-items:center;gap:12px}
+.bar{height:18px;border-radius:9px;box-shadow:var(--in);overflow:hidden;flex:1}.err{color:var(--l3);font-weight:700;min-height:1.5em}
+ol.tl{list-style:none;padding:0;margin:12px 0 0}
+nav{position:fixed;z-index:5;left:0;right:0;bottom:0;display:flex;justify-content:space-around;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:var(--base);box-shadow:0 -4px 12px var(--dark)}
+nav a{flex-direction:column;align-items:center;justify-content:center;min-width:60px;min-height:48px;padding:4px 8px;border-radius:16px;text-decoration:none;color:var(--ink2);font-size:13px;font-weight:600;display:flex}
+nav a{white-space:nowrap}nav a[aria-current=page]{box-shadow:var(--in);color:var(--accent)}nav .logo,.tg{display:none}
+.fab{position:fixed;right:16px;bottom:86px;width:52px;height:52px;border-radius:50%;box-shadow:var(--r);font-size:28px;line-height:1;color:var(--accent);z-index:4}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:148px;z-index:30;background:var(--base);box-shadow:var(--r);padding:10px 16px;border-radius:16px;max-width:92vw;display:flex;gap:10px;align-items:center}
+#ov{position:fixed;inset:0;z-index:20;background:rgba(20,33,61,.5);display:flex;align-items:flex-end;justify-content:center}
+.dlg{background:var(--base);width:100%;max-width:440px;max-height:90vh;overflow:auto;padding:22px;border-radius:24px 24px 0 0}
+#wel{position:fixed;inset:0;z-index:40;background:var(--base);overflow:auto;padding:16px}#wel ul{padding-left:20px}
+@media(min-width:420px){.u{display:inline}}
+@media(min-width:760px){body{padding-left:96px}main{max-width:720px;padding:24px 20px 40px}.card{padding:18px}
+nav{top:0;right:auto;width:96px;flex-direction:column;justify-content:flex-start;align-items:center;gap:8px;padding:16px 6px;box-shadow:var(--r)}
+nav .logo{display:grid;margin-bottom:8px}.hd .logo{display:none}nav a{min-width:0;width:100%;padding:4px 0;font-size:12px}.tg{display:grid;place-items:center;margin-top:auto;width:48px;padding:0}.fab{bottom:24px;right:28px}#toast{bottom:24px}#ov{align-items:center}.dlg{border-radius:24px}.day{height:58px}}
+@media(min-width:1100px){main{max-width:1040px}.cols{grid-template-columns:3fr 2fr;gap:20px}.cols.eq{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+<nav id="nav" aria-label="Main"></nav><main id="main" tabindex="-1"></main>
+<button class="fab" id="fab" aria-label="Add a deadline">+</button>
+<div id="toast" role="status" aria-live="polite" hidden></div><div id="ov" hidden></div><div id="wel" hidden></div>
+<script>
+// ---------- helpers ----------
+const $=s=>document.querySelector(s),H=document.documentElement,TY=['test','project','quiz','homework'],LN=['Free','Light','Busy','Overloaded'];
+const ST={test:['Review notes','Practice questions','Final recap'],project:['Plan and outline','First draft','Revise','Final polish'],quiz:['Review','Self-test']};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+const ic=p=>'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
+const IC={cal:ic('<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/>'),week:ic('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>'),ins:ic('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'),set:ic('<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>'),moon:ic('<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>')};
+const AL='<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M12 3 2 21h20zM12 10v5m0 3v.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>';
+// dates use LOCAL time, saved as YYYY-MM-DD
+const D=new Date(),pad=n=>('0'+n).slice(-2),key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse=k=>{const a=k.split('-');return new Date(+a[0],a[1]-1,+a[2])};
+const add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const fmt=(k,o)=>parse(k).toLocaleDateString('en-US',o||{weekday:'short',month:'short',day:'numeric'});
+const fl=k=>fmt(k,{weekday:'long',month:'short',day:'numeric'}),md=k=>fmt(k,{month:'short',day:'numeric'});
+const T=key(D),mon=d=>add(d,-((d.getDay()+6)%7)),wd=k=>{const g=parse(k).getDay();return g>0&&g<6};
+// ---------- storage: starts EMPTY, falls back to memory if blocked ----------
+const DEF={points:{test:3,project:3,quiz:2,homework:1},threshold:5,theme:'',role:'student',onboarded:false},mem={};
+function rd(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):mem[k]||null}catch(e){return mem[k]||null}}
+function wr(k,v){mem[k]=v;try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+let S=Object.assign({},DEF,rd('weekload2.settings')||{}),items=rd('weekload2.items');
+S.points=Object.assign({},DEF.points,S.points);if(!Array.isArray(items))items=[];
+let _id=Date.now();const uid=()=>++_id;
+const sv=()=>{wr('weekload2.items',items);wr('weekload2.settings',S)};
+const th=()=>{H.dataset.theme=S.theme||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')};
+// ---------- points and levels ----------
+const pts=t=>S.points[t];
+const load=k=>items.filter(i=>i.date===k).reduce((a,i)=>a+pts(i.type),0);
+const lv=n=>n<=0?0:n>=S.threshold?3:n>=3?2:1;
+const ds28=o=>[...Array(28)].map((_,i)=>key(add(mon(D),i+(o||0)*7)));
+const ovDays=()=>ds28(0).filter(k=>lv(load(k))===3).sort((a,b)=>load(b)-load(a));
+// the lightest school days in the next n days
+function lightest(n){const c=[];for(let i=1;i<=n;i++){const k=key(add(D,i));if(wd(k))c.push([k,load(k)])}return c.sort((a,b)=>a[1]-b[1]||(a[0]<b[0]?-1:1))}
+// ---------- toast and dialogs ----------
+let tm,last;
+function toast(m,undo){const t=$('#toast');t.innerHTML='<span>'+esc(m)+'</span>'+(undo?'<button class="b sm" id="undo">Undo</button>':'');t.hidden=false;if(undo)$('#undo').onclick=()=>{undo();t.hidden=true};clearTimeout(tm);tm=setTimeout(()=>t.hidden=true,5000)}
+function openM(h){last=document.activeElement;const o=$('#ov');o.innerHTML='<div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt">'+h+'</div>';o.hidden=false;const f=o.querySelector('input,select,button');f&&f.focus()}
+function closeM(){$('#ov').hidden=true;$('#ov').innerHTML='';last&&last.focus&&last.focus()}
+document.addEventListener('keydown',e=>{const o=$('#ov');if(o.hidden)return;if(e.key==='Escape')return closeM();
+ if(e.key==='Tab'){const f=[...o.querySelectorAll('button,input,select,textarea')].filter(x=>!x.disabled);if(!f.length)return;const a=f[0],z=f[f.length-1];
+ if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+$('#ov').addEventListener('click',e=>{if(e.target.id==='ov')closeM()});
+// ---------- reusable pieces ----------
+const legend=()=>`<div class="leg"><span><i class="sw h0"></i>Free</span><span><i class="sw h1"></i>Light 1–2</span>${S.threshold>3?`<span><i class="sw h2"></i>Busy 3–${S.threshold-1}</span>`:''}<span><i class="sw h3"></i>Overloaded ${S.threshold}+</span></div>`;
+const rowHTML=i=>`<div class="item"><div><b>${esc(i.subject)}</b>: ${esc(i.title)} <span class="tag">${cap(i.type)}, ${pts(i.type)} pts</span></div><div class="acts"><button class="b sm" data-a="move" data-id="${i.id}" aria-label="Move ${esc(i.title)}">Move</button><button class="b sm" data-a="edit" data-id="${i.id}" aria-label="Edit ${esc(i.title)}">Edit</button><button class="b sm" data-a="del" data-id="${i.id}" aria-label="Delete ${esc(i.title)}">Delete</button></div></div>`;
+function dayCard(k){const n=load(k),l=lv(n),its=items.filter(i=>i.date===k);
+ const m=l===3?`Overloaded: ${n} points. Move one deadline to a lighter day.`:l===2?`Busy day: ${n} points.`:l===1?`Light day: ${n} points.`:'Nothing due. Good day to get ahead.';
+ return `<section class="card" id="daycard"><h2>${fl(k)}</h2><p class="msg h${l}">${l===3?AL:''}${m}</p>${its.map(rowHTML).join('')}<div class="row"><button class="b" data-a="add" data-k="${k}">Add a deadline on this day</button></div></section>`}
+// ---------- tools ----------
+let tt='test',PL={id:'',built:false,done:{}},off=0,sel=T,wsel=T;
+// teacher tool: 3 lightest days for a new assessment
+const tTeach=()=>`<section class="card"><h2>Find a lighter day</h2><p class="mute">Planning a test, project or quiz? See the 3 lightest school days in the next 3 weeks.</p>${items.length?`<label>What are you scheduling?<select id="tt">${TY.map(t=>`<option value="${t}"${t===tt?' selected':''}>${cap(t)}</option>`).join('')}</select></label>${lightest(21).slice(0,3).map(x=>`<button class="b opt" data-a="addt" data-k="${x[0]}" data-t="${tt}">${fmt(x[0])}: load ${x[1]} → ${x[1]+pts(tt)} after adding. Tap to use this date.</button>`).join('')}`:'<p class="msg h0">Add some deadlines first, then WeekLoad can suggest lighter days.</p>'}</section>`;
+// student tool: study sessions on the lightest days before a deadline
+function tStud(){const up=items.filter(i=>i.date>T&&i.type!=='homework').sort((a,b)=>a.date<b.date?-1:1),hd='<h2>Spread out my studying</h2><p class="mute">Pick an upcoming deadline. WeekLoad puts study sessions on your lightest days.</p>';
+ if(!up.length)return `<section class="card">${hd}<p class="msg h0">Add a test, project or quiz first.</p></section>`;
+ if(!up.some(i=>i.id==PL.id))PL.id=up[0].id;
+ const it=up.find(i=>i.id==PL.id),L=ST[it.type];let out='';
+ if(PL.built){const c=[];for(let k=T;k<it.date;k=key(add(parse(k),1)))c.push([k,load(k)]);
+  if(c.length<2)out='<p class="msg h0" style="margin-top:12px">The deadline is too close for a plan. Start today.</p>';
+  else{const p=c.sort((a,b)=>a[1]-b[1]||(a[0]<b[0]?-1:1)).slice(0,L.length).sort((a,b)=>a[0]<b[0]?-1:1);
+   out='<ol class="tl">'+p.map((x,i)=>`<li class="item row2"><span>${fmt(x[0])}: ${L[i]} <span class="mute">(${x[1]} pts that day)</span></span><button class="b sm" role="checkbox" aria-checked="${!!PL.done[x[0]]}" data-a="chk" data-k="${x[0]}" aria-label="Mark ${L[i]} done">${PL.done[x[0]]?'✓':'○'}</button></li>`).join('')+'</ol>'}}
+ return `<section class="card">${hd}<label>Deadline<select id="pl">${up.map(i=>`<option value="${i.id}"${i.id==PL.id?' selected':''}>${fmt(i.date)}: ${esc(i.subject)} ${esc(i.title)}</option>`).join('')}</select></label><div class="row"><button class="b acc" data-a="plan">Build my study plan</button></div>${out}</section>`}
+// ---------- views ----------
+const head=(t,s)=>`<div class="hd"><div class="logo">${IC.cal}</div><div><h1>${t}</h1><p class="mute">${s}</p></div></div>`;
+function vCal(){const ds=ds28(off);let c='';
+ ds.forEach(k=>{const n=load(k),l=lv(n),d=parse(k).getDate();c+=`<button class="day h${l}${k<T?' past':''}${k===T?' td':''}${k===sel?' sel':''}" data-a="day" data-k="${k}" aria-pressed="${k===sel}" aria-label="${fl(k)}, ${n} points, ${LN[l].toLowerCase()}"><b>${d}${l===3?AL:''}</b><small>${n?n+'<span class="u"> pts</span>':''}</small></button>`});
+ const tools=S.role==='teacher'?tTeach()+tStud():tStud()+tTeach();
+ const empty=items.length?'':'<section class="card"><h2>Your calendar is empty</h2><p>Add your first test, quiz or project. WeekLoad adds up the points for each day and shows when a day gets too heavy.</p><button class="b acc" data-a="add">Add your first deadline</button></section>';
+ return `${head('WeekLoad','See which school days are overloaded, then spread the work out.')}${empty}<div class="cols"><section class="card"><h2>${off?'Calendar':'Next 4 weeks'}: ${md(ds[0])} to ${md(ds[27])}</h2><div class="row" style="margin:0 0 12px;justify-content:space-between"><button class="b sm" data-a="nav" data-n="-4" aria-label="Previous 4 weeks">‹ Back</button><button class="b sm" data-a="nav" data-n="0">Today</button><button class="b sm" data-a="nav" data-n="4" aria-label="Next 4 weeks">Next ›</button></div><div class="g7 dow" aria-hidden="true">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<span>${d}</span>`).join('')}</div><div class="g7">${c}</div>${legend()}</section>${dayCard(sel)}</div><div class="cols eq">${tools}</div>`}
+function vWeek(){const st=mon(D),ds=[...Array(7)].map((_,i)=>key(add(st,i))),tm2=key(add(D,1)),n=load(tm2),c=items.filter(i=>i.date===tm2).length,o=lv(n)===3,wn=fmt(tm2,{weekday:'long'});
+ return `${head('This week',md(ds[0])+' to '+md(ds[6]))}<section class="card"><p class="msg h${o?3:0}">${o?AL+c+' deadline'+(c>1?'s are':' is')+' due tomorrow. '+wn+' is overloaded.':c?c+' deadline'+(c>1?'s':'')+' due tomorrow. Nothing heavy.':'Nothing due tomorrow.'}</p>${o?`<button class="b" data-a="seeT">See ${wn}</button>`:''}</section>
+ <div class="g7" style="margin-bottom:20px">${ds.map(k=>{const n=load(k),l=lv(n);return `<button class="day h${l}${k===T?' td':''}${k===wsel?' sel':''}" data-a="wk" data-k="${k}" aria-label="${fl(k)}, ${n} points"><b>${fmt(k,{weekday:'short'})}</b><small>${n?n:''}</small></button>`}).join('')}</div>
+ ${ds.map(k=>{const n=load(k),l=lv(n),its=items.filter(i=>i.date===k);return `<section class="card" id="d${k}"><h2>${fl(k)} <span class="msg h${l}" style="display:inline-block;padding:2px 10px;margin:0 0 0 8px;font-size:13px">${n} pts, ${LN[l].toLowerCase()}</span></h2>${its.length?its.map(rowHTML).join(''):'<p class="msg h0">Nothing due</p>'}</section>`}).join('')}`}
+function vIns(){const sub='Your next 4 weeks at a glance';if(!items.length)return `${head('Insights',sub)}<section class="card"><h2>No data yet</h2><p>Add a few deadlines and your insights will show up here.</p><button class="b acc" data-a="add">Add a deadline</button></section>`;
+ const ds=ds28(0),L=ds.map(load),od=ovDays(),mx=Math.max(...L),bk=ds[L.indexOf(mx)],w5=ds.filter(wd),tot=w5.reduce((a,k)=>a+load(k),0);
+ const wk=[0,1,2,3].map(w=>{const x=L.slice(w*7,w*7+7);return[x.reduce((a,b)=>a+b,0),Math.max(...x)]}),wm=Math.max(1,...wk.map(x=>x[0]));
+ const sj={};items.forEach(i=>sj[i.subject]=(sj[i.subject]||0)+pts(i.type));const sa=Object.entries(sj).sort((a,b)=>b[1]-a[1]),sm=Math.max(1,...sa.map(x=>x[1]));
+ const stat=(v,l)=>`<div class="card" style="margin:0"><b style="font-size:1.5rem">${v}</b><div class="mute">${l}</div></div>`;
+ const tip=od.length?`${od.slice(0,2).map(md).join(' and ')} ${od.length>1?'are':'is'} overloaded. Try moving one deadline from ${od.length>1?'each':'it'} to a lighter day.`:'No overloaded days. Nice work.';
+ return `${head('Insights',sub)}<div class="stats">${stat(od.length+' overloaded day'+(od.length===1?'':'s'),'Days at '+S.threshold+' points or more')}${stat(mx?md(bk)+' ('+mx+' pts)':'None','Busiest day')}${stat((tot/w5.length).toFixed(1)+' pts','Average load per school day')}</div>
+ <section class="card"><h2>Load by week</h2>${wk.map((x,i)=>`<div class="row2" style="flex-wrap:nowrap"><span style="min-width:62px">Week ${i+1}</span><div class="bar"><div class="fill h${lv(x[1])}" style="width:${x[0]/wm*100}%"></div></div><b style="min-width:56px;text-align:right">${x[0]} pts</b></div>`).join('')}</section>
+ <section class="card"><h2>Points by subject</h2>${sa.map(x=>`<div class="row2" style="flex-wrap:nowrap"><span style="min-width:84px">${esc(x[0])}</span><div class="bar"><div class="fill" style="width:${x[1]/sm*100}%"></div></div><b style="min-width:32px;text-align:right">${x[1]}</b></div>`).join('')}</section>
+ <section class="card"><h2>Tip</h2><p>${tip}</p>${od.length?'<button class="b acc" data-a="fix">Fix overloaded days</button>':''}</section>`}
+function vSet(){const dk=H.dataset.theme==='dark',st=(k,l,v)=>`<div class="row2"><span>${l}</span><span class="stp"><button class="b sm" data-a="step" data-k="${k}" data-d="-1" aria-label="Decrease ${l}">−</button><output>${v}</output><button class="b sm" data-a="step" data-k="${k}" data-d="1" aria-label="Increase ${l}">+</button></span></div>`;
+ return `${head('Settings','Make WeekLoad work for your school')}<section class="card"><h2>Appearance</h2><div class="row2"><span>Dark mode</span><button class="b" data-a="theme" aria-pressed="${dk}">${dk?'On':'Off'}</button></div></section>
+ <section class="card"><h2>Stress points</h2>${TY.map(t=>st(t,cap(t),S.points[t])).join('')}${st('threshold','Overloaded at',S.threshold)}<div class="row"><button class="b" data-a="reset">Reset to defaults</button></div></section>
+ <section class="card"><h2>Your data</h2><p>WeekLoad saves everything on this device. Nothing is sent anywhere.</p><label>Backup text<textarea id="ta" rows="4"></textarea></label><div class="row"><button class="b" data-a="copy">Copy my data</button><button class="b" data-a="paste">Paste data</button></div><div class="row"><button class="b" data-a="example">Add example deadlines</button><button class="b red" data-a="clear">Clear all data</button></div></section>
+ <section class="card"><h2>About</h2><p>WeekLoad version 2.0</p><a href="#/about" data-a="go" data-v="about">About WeekLoad</a></section>`}
+function vAbout(){return `${head('About WeekLoad','Built for the CSC Back-to-School Hackathon')}${[['The problem','Students get several tests on one day because teachers cannot see each other\'s schedules.'],['Who it helps','Students plan ahead, teachers pick lighter days, and schools see fairer workloads.'],['How it works','Each deadline adds points to its day: test 3, project 3, quiz 2, homework 1. The day\'s total sets its color.'+legend()],['Privacy','Data stays on your device. No accounts, and nothing is sent anywhere.'],['Built with','HTML, CSS and JavaScript. AI tools helped with the code and design. The team chose the idea, tested it, and can explain every part.'],['What\'s next','An optional shared school calendar.']].map(c=>`<section class="card"><h2>${c[0]}</h2><div>${c[1]}</div></section>`).join('')}`}
+const welHTML=()=>`<div class="card" style="max-width:520px;margin:5vh auto"><div class="logo" style="margin-bottom:14px">${IC.cal}</div><h1>Stop stacking deadlines.</h1><p style="margin-top:8px">WeekLoad shows which school days are overloaded, so you can spread the work out.</p><ul><li>See every deadline on one calendar</li><li>Find lighter days to schedule on</li><li>Get a study plan that spreads the work</li></ul><p class="mute">Who are you? This only changes which tool you see first.</p><div class="row" style="margin-top:0"><button class="b" data-a="role" data-r="student" aria-pressed="${S.role==='student'}">I'm a student</button><button class="b" data-a="role" data-r="teacher" aria-pressed="${S.role==='teacher'}">I'm a teacher</button></div><div class="row"><button class="b acc" data-a="start">Get started</button></div></div>`;
+// ---------- modals ----------
+// add or edit a deadline
+function addM(date,type,id){const ed=id&&items.find(x=>x.id===id);let ty=ed?ed.type:type||'test';
+ openM(`<h2 id="dt">${ed?'Edit deadline':'Add a deadline'}</h2><label>Subject<input id="as" placeholder="e.g. Biology" value="${ed?esc(ed.subject):''}"></label><label>What is due<input id="at" placeholder="e.g. Cell unit test" value="${ed?esc(ed.title):''}"></label><label>Date<input id="ad" type="date" ${ed?'':'min="'+T+'"'} value="${ed?ed.date:date||key(add(D,1))}"></label><label>Type</label><div class="row" style="margin-top:4px" role="group" aria-label="Type">${TY.map(t=>`<button class="chip" data-t="${t}">${cap(t)} (${pts(t)})</button>`).join('')}</div><p id="pv" class="mute" style="margin-top:12px"></p><p id="er" class="err" role="alert"></p><div class="row" style="margin-top:0"><button class="b acc" id="ok">${ed?'Save changes':'Add deadline'}</button><button class="b" data-a="close">Cancel</button></div>`);
+ const upd=()=>{document.querySelectorAll('.chip[data-t]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.t===ty));const d=$('#ad').value,n=d?load(d)-(ed&&ed.date===d?pts(ed.type):0)+pts(ty):0;$('#pv').textContent=d?`${md(d)} will have ${n} points (${LN[lv(n)]})`:''};
+ document.querySelectorAll('.chip[data-t]').forEach(b=>b.onclick=()=>{ty=b.dataset.t;upd()});$('#ad').oninput=upd;upd();
+ $('#ok').onclick=()=>{const s=$('#as').value.trim(),t=$('#at').value.trim(),d=$('#ad').value;if(!s||!t||!d){$('#er').textContent='Fill in subject, what is due, and a date.';return}
+  if(ed)Object.assign(ed,{subject:s,title:t,type:ty,date:d});else items.push({id:uid(),subject:s,title:t,type:ty,date:d});
+  sel=d;if(!ed)off=0;sv();closeM();render();toast(ed?'Changes saved.':'Deadline added.')}}
+// move a deadline to a lighter day
+function moveM(id,auto){const it=items.find(x=>x.id===id);if(!it)return;const cur=load(it.date),p=pts(it.type),o=lightest(21).filter(x=>x[0]!==it.date).slice(0,3);let pk=auto&&o[0]?o[0][0]:null;
+ openM(`<h2 id="dt">Move a deadline</h2><p class="msg h0"><b>${esc(it.subject)}</b>: ${esc(it.title)} (${cap(it.type)}, ${p} pts), now on ${fmt(it.date)} (${cur} pts)</p><p><i class="sw h${lv(cur)}"></i>${cur} pts → <i class="sw h${lv(cur-p)}"></i>${cur-p} pts. ${fmt(it.date)} goes from ${cur} pts to ${cur-p} pts.</p><h2>Pick a lighter day</h2>${o.map(x=>`<button class="b opt" aria-pressed="false" data-k="${x[0]}">${fmt(x[0])}: ${x[1]} pt${x[1]===1?'':'s'} now, ${x[1]+p} pts after moving</button>`).join('')||'<p class="mute">No school days available in the next 3 weeks.</p>'}<div class="row"><button class="b acc" id="mv" disabled>Move here</button><button class="b" data-a="close">Cancel</button></div>`);
+ const upd=()=>{document.querySelectorAll('#ov .opt').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===pk));$('#mv').disabled=!pk};
+ document.querySelectorAll('#ov .opt').forEach(b=>b.onclick=()=>{pk=b.dataset.k;upd()});upd();
+ $('#mv').onclick=()=>{const od=it.date;it.date=pk;sv();closeM();const nl=load(od);toast(`Moved. ${fmt(od)} is now ${nl} pts.`+(lv(nl)===3?' Still overloaded, move one more.':''));render()}}
+// ---------- actions (buttons with data-a) ----------
+function step(d){const x=+d.d;if(d.k==='threshold')S.threshold=Math.min(12,Math.max(3,S.threshold+x));else S.points[d.k]=Math.min(9,Math.max(0,S.points[d.k]+x));sv();render();const b=document.querySelector(`[data-k="${d.k}"][data-d="${d.d}"]`);b&&b.focus()}
+function copy(){const ta=$('#ta');ta.value=JSON.stringify({items,settings:S});const ok=()=>toast('Data copied');
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(ta.value).then(ok,fb);else fb();
+ function fb(){ta.select();try{document.execCommand('copy');ok()}catch(e){toast('Select the text and copy it.')}}}
+function paste(){const go=t=>{try{const o=JSON.parse(t);if(!o||!Array.isArray(o.items)||!o.items.every(i=>i&&typeof i.date==='string'&&/^\d{4}-\d\d-\d\d$/.test(i.date)&&TY.includes(i.type)&&i.subject!=null&&i.title!=null))throw 0;
+ items=o.items.map((i,n)=>({id:i.id||uid(),subject:String(i.subject),title:String(i.title),type:i.type,date:i.date}));
+ if(o.settings)S=Object.assign({},S,o.settings,{points:Object.assign({},DEF.points,o.settings.points)});sv();th();render();toast('Data pasted')}catch(e){toast("That data isn't valid. Copy it again from WeekLoad.")}};
+ const v=$('#ta').value.trim();if(v)go(v);else if(navigator.clipboard&&navigator.clipboard.readText)navigator.clipboard.readText().then(go,()=>go(''));else go('')}
+const A={close:closeM,
+ add:d=>addM(d.k||(sel>=T?sel:null)),
+ day:d=>{sel=d.k;render();if(innerWidth<1100){const e=$('#daycard');e&&e.scrollIntoView({behavior:'smooth',block:'nearest'})}},
+ nav:d=>{off=+d.n===0?0:off+(+d.n);if(+d.n===0)sel=T;render()},
+ wk:d=>{wsel=d.k;render();const e=document.getElementById('d'+d.k);e&&e.scrollIntoView()},
+ seeT:()=>{sel=key(add(D,1));off=0;A.go({v:'calendar'})},
+ go:d=>{view=d.v;try{location.hash='#/'+d.v}catch(e){}scrollTo(0,0);render()},
+ move:d=>moveM(+d.id),edit:d=>addM(null,null,+d.id),
+ fix:()=>{const o=ovDays();if(!o.length)return;const its=items.filter(i=>i.date===o[0]).sort((a,b)=>pts(a.type)-pts(b.type));its[0]&&moveM(its[0].id,true)},
+ del:d=>{const i=items.findIndex(x=>x.id===+d.id),it=items[i];if(!it)return;items.splice(i,1);sv();render();toast('Deleted '+it.title+'.',()=>{items.splice(i,0,it);sv();render()})},
+ addt:d=>addM(d.k,d.t),plan:()=>{PL.built=true;render()},chk:d=>{PL.done[d.k]=!PL.done[d.k];render()},
+ step,copy,paste,
+ theme:()=>{S.theme=H.dataset.theme==='dark'?'light':'dark';sv();th();render()},
+ reset:()=>{S.points=Object.assign({},DEF.points);S.threshold=5;sv();render()},
+ example:()=>{const a=D.getDay()===1?D:add(D,(8-D.getDay())%7);[[1,'Math','Unit 4 test','test'],[1,'History','Essay draft','project'],[1,'Chemistry','Lab quiz','quiz'],[2,'English','Reading log','homework'],[4,'Physics','Motion test','test'],[4,'Spanish','Oral quiz','quiz'],[8,'Biology','Cell unit test','test']].forEach((r,i)=>items.push({id:uid(),subject:r[1],title:r[2],type:r[3],date:key(add(a,r[0]))}));sv();render();toast('Example deadlines added.')},
+ clear:()=>openM('<h2 id="dt">Clear all data?</h2><p>This deletes every deadline on this device. This cannot be undone.</p><div class="row"><button class="b red" data-a="clearGo">Clear everything</button><button class="b" data-a="close">Keep my data</button></div>'),
+ clearGo:()=>{items=[];sv();closeM();render();toast('All data cleared')},
+ role:d=>{S.role=d.r;sv();render()},start:()=>{S.onboarded=true;sv();render()}};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&A[b.dataset.a]){if(b.tagName==='A')e.preventDefault();A[b.dataset.a](b.dataset,b)}});
+document.addEventListener('change',e=>{const t=e.target;if(t.id==='tt'){tt=t.value;render()}if(t.id==='pl'){PL.id=t.value;PL.built=false;PL.done={};render()}});
+// ---------- router and start ----------
+const V={calendar:vCal,week:vWeek,insights:vIns,settings:vSet,about:vAbout};
+let view=V[location.hash.slice(2)]?location.hash.slice(2):'calendar';
+function render(){const v=view;$('#main').innerHTML=V[v]();
+ $('#nav').innerHTML='<div class="logo" aria-hidden="true">'+IC.cal+'</div>'+[['calendar',IC.cal,'Calendar'],['week',IC.week,'This week'],['insights',IC.ins,'Insights'],['settings',IC.set,'Settings']].map(n=>`<a href="#/${n[0]}" data-a="go" data-v="${n[0]}"${n[0]===v?' aria-current="page"':''}>${n[1]}${n[2]}</a>`).join('')+'<button class="b tg" data-a="theme" aria-label="Toggle dark mode">'+IC.moon+'</button>';
+ $('#wel').hidden=S.onboarded;if(!S.onboarded)$('#wel').innerHTML=welHTML()}
+addEventListener('hashchange',()=>{const h=location.hash.slice(2);if(V[h])view=h;scrollTo(0,0);render()});
+$('#fab').onclick=()=>A.add({});
+th();render();
+</script></body></html>
